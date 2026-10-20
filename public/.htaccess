@@ -1,0 +1,29 @@
+# Hospedagem Apache (cPanel, Hostinger, HostGator e similares).
+# O build copia este arquivo para out/. Publicar o conteúdo de out/ na raiz do
+# domínio (public_html), nunca numa subpasta.
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+# O export gera sobre.html E uma pasta sobre/ (arquivos de pré-carregamento do
+# Next). Sem isto o Apache vê a pasta, redireciona /sobre para /sobre/ e a
+# página não abre.
+DirectorySlash Off
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # /sobre e /sobre/ servem sobre.html quando o arquivo existe.
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+?)/?$ /$1.html [L]
+</IfModule>
+
+# Cabeçalhos de segurança que o site envia hoje. A Permissions-Policy ficou mais
+# fechada porque o site não usa câmera nem localização.
+<IfModule mod_headers.c>
+  Header always set X-Frame-Options "DENY"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), geolocation=(), microphone=()"
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+</IfModule>

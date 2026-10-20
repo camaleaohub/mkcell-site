@@ -1,0 +1,23 @@
+# Dependências
+node_modules/
+
+# Build
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Variáveis de ambiente locais
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+*.log
+
+# Editor e sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
